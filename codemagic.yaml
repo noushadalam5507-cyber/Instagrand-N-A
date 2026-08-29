@@ -1,4 +1,3 @@
-
 workflows:
   react-native-android:
     name: React Native Android Build
@@ -9,24 +8,22 @@ workflows:
     scripts:
       - name: Create Mobile App Engine
         script: |
-          unzip "neoncall-purple-studio (6).zip" -d ./extracted_app
+          unzip "newcrall purple studio (8).zip" -d ./extracted_app
           npx create-expo-app@latest my-mobile-app --template blank --no-install
           cd my-mobile-app
           rm -rf src
-          INNER_SRC=$(find ../extracted_app -type d -name "src" | head -n 1)
-          if [ ! -z "$INNER_SRC" ]; then
-            cp -R "$INNER_SRC" ./src
+          
+          EXACT_SRC=$(find ../extracted_app -type d -name "src" | head -n 1)
+          if [ -z "$EXACT_SRC" ]; then
+            cp -R "../extracted_app/" src
           else
-            cp -R ../extracted_app/* ./src || true
+            cp -R "$EXACT_SRC" ./src
           fi
-          npm install react-native-agora react-native-google-mobile-ads @react-native-firebase/app @react-native-firebase/firestore expo-dev-client
-      - name: Install dependencies
+      - name: Build Android APK
         script: |
-          cd my-mobile-app && npm install --legacy-peer-deps
-      - name: Build Android App
-        script: |
-          cd my-mobile-app && npx expo export --platform android
+          cd my-mobile-app
+          npm install
+          npx expo run:android --variant release
     artifacts:
-      - "my-mobile-app/dist/*.apk"
-      - "my-mobile-app/android/app/build/outputs/apk/release/*.apk"
+      - my-mobile-app/android/app/build/outputs/apk/release/*.apk
       
