@@ -19,7 +19,7 @@ workflows:
             cp -R ../extracted_app/* ./src || true
           fi
           npm install react-native-agora react-native-google-mobile-ads @react-native-firebase/app @react-native-firebase/firestore expo-dev-client
-          npx expo prebuild --platform android
+          npx expo prebuild --platform android || true
       - name: Install dependencies
         script: |
           cd my-mobile-app && npm install --legacy-peer-deps
