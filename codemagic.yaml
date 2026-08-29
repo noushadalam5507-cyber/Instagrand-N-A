@@ -6,25 +6,13 @@ workflows:
     environment:
       node: latest
     scripts:
-      - name: Extract ZIP File
+      - name: Extract and Check ZIP Content
         script: |
           unzip "neoncall-purple-studio (6).zip" -d ./extracted_app
-          APP_DIR=$(find ./extracted_app -type f -name "package.json" -exec dirname {} \; | head -n 1)
-          if [ ! -z "$APP_DIR" ]; then
-            cp -R $APP_DIR/* . || true
-            cp -R $APP_DIR/.* . || true
-          fi
-      - name: Install dependencies
-        script: |
-          npm install
-      - name: Build Android App
-        script: |
-          ANDROID_DIR=$(find . -type d -name "android" | head -n 1)
-          if [ ! -z "$ANDROID_DIR" ]; then
-            cd "$ANDROID_DIR" && ./gradlew assembleRelease
-          else
-            exit 1
-          fi
+          echo "=== LIST OF ALL FILES AND FOLDERS ==="
+          find ./extracted_app -maxdepth 3
+          exit 1
     artifacts:
-      - "**/build/outputs/apk/release/*.apk"
+      - "*.apk"
+      
       
