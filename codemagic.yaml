@@ -20,15 +20,12 @@ workflows:
           fi
           npm install react-native-agora react-native-google-mobile-ads @react-native-firebase/app @react-native-firebase/firestore expo-dev-client
           npx expo prebuild --platform android
-          cp -R * ..
-          cp -R .* .. || true
-          cd ..
       - name: Install dependencies
         script: |
-          npm install --legacy-peer-deps
+          cd my-mobile-app && npm install --legacy-peer-deps
       - name: Build Android App
         script: |
-          cd android && ./gradlew assembleRelease
+          cd my-mobile-app/android && ./gradlew assembleRelease
     artifacts:
-      - "android/app/build/outputs/apk/release/*.apk"
+      - "my-mobile-app/android/app/build/outputs/apk/release/*.apk"
       
