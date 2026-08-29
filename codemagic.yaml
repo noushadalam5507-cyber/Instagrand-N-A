@@ -23,7 +23,7 @@ workflows:
         script: |
           cd my-mobile-app
           npm install
-          npx expo run:android --variant release --no-interactive
+          npx expo run:android --variant release
     artifacts:
       - my-mobile-app/android/app/build/outputs/apk/release/*.apk
       
