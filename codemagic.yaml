@@ -8,7 +8,7 @@ workflows:
     scripts:
       - name: Create Mobile App Engine
         script: |
-          unzip "newcrall purple studio (8).zip" -d ./extracted_app
+          unzip "neoncall-purple-studio (6).zip" -d ./extracted_app
           npx create-expo-app@latest my-mobile-app --template blank --no-install
           cd my-mobile-app
           rm -rf src
