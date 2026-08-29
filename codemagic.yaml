@@ -1,18 +1,35 @@
+
 workflows:
   react-native-android:
     name: React Native Android Build
     max_build_duration: 60
     instance_type: mac_mini_m1
     environment:
-      node: latest
+      node: 20.x
     scripts:
-      - name: Extract and Check ZIP Content
+      - name: Create Mobile App Engine
         script: |
           unzip "neoncall-purple-studio (6).zip" -d ./extracted_app
-          echo "=== LIST OF ALL FILES AND FOLDERS ==="
-          find ./extracted_app -maxdepth 3
-          exit 1
+          npx create-expo-app@latest my-mobile-app --template blank --no-install
+          cd my-mobile-app
+          rm -rf src
+          INNER_SRC=$(find ../extracted_app -type d -name "src" | head -n 1)
+          if [ ! -z "$INNER_SRC" ]; then
+            cp -R "$INNER_SRC" ./src
+          else
+            cp -R ../extracted_app/* ./src || true
+          fi
+          npm install react-native-agora react-native-google-mobile-ads @react-native-firebase/app @react-native-firebase/firestore expo-dev-client
+          npx expo prebuild --platform android
+          cp -R * ..
+          cp -R .* .. || true
+          cd ..
+      - name: Install dependencies
+        script: |
+          npm install --legacy-peer-deps
+      - name: Build Android App
+        script: |
+          cd android && ./gradlew assembleRelease
     artifacts:
-      - "*.apk"
-      
+      - "android/app/build/outputs/apk/release/*.apk"
       
