@@ -9,7 +9,7 @@ workflows:
       - name: Create Mobile App Engine
         script: |
           unzip "neoncall-purple-studio (6).zip" -d ./extracted_app
-          npx create-expo-app@latest my-mobile-app --template blank --no-install
+          npx create-expo-app@latest my-mobile-app --template blank --no-install --yes
           cd my-mobile-app
           rm -rf src
           
@@ -23,7 +23,7 @@ workflows:
         script: |
           cd my-mobile-app
           npm install
-          npx expo run:android --variant release
+          npx expo run:android --variant release --no-interactive
     artifacts:
       - my-mobile-app/android/app/build/outputs/apk/release/*.apk
       
