@@ -6,7 +6,7 @@ workflows:
     environment:
       node: latest
     scripts:
-         - name: Create Mobile App Engine
+      - name: Create Mobile App Engine
         script: |
           unzip "neoncall-purple-studio (6).zip" -d ./extracted_app
           EXACT_SRC=$(find ./extracted_app -type d -name "src" | head -n 1)
@@ -18,5 +18,4 @@ workflows:
           npm install
           npx expo prebuild --clean
           CI=1 npx expo run:android --variant release --no-interactive
-          
           
