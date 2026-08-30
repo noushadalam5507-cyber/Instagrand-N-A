@@ -19,6 +19,6 @@ workflows:
             cp -R "$EXACT_SRC/." src
           fi
           npm install
-          npx expo prebuild --clean -y
+          npx expo prebuild --clean
           CI=1 npx expo run:android --variant release --no-interactive
           
