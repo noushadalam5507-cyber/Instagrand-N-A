@@ -9,13 +9,14 @@ workflows:
       - name: Create Mobile App Engine
         script: |
           unzip "neoncall-purple-studio (6).zip" -d ./extracted_app
-          EXACT_SRC=$(find ./extracted_app -type d -name "src" | head -n 1)
-          if [ -z "$EXACT_SRC" ]; then
+          PROJECT_DIR=$(find ./extracted_app -name "package.json" -maxdepth 3 | head -n 1)
+          if [ -z "$PROJECT_DIR" ]; then
               cd ./extracted_app
           else
-              cd "$(dirname "$EXACT_SRC")"
+              cd "$(dirname "$PROJECT_DIR")"
           fi
           npm install
+          npx expo install expo
           npx expo prebuild --clean
           npx expo run:android --variant release
           
