@@ -23,7 +23,7 @@ workflows:
         script: |
           cd my-mobile-app
           npm install
-          sed -i '' 's/"package": "com.anonymous.mymobileapp"/"package": "com.noushad.myinstaapp"/g' app.json || sed -i 's/"package": "com.anonymous.mymobileapp"/"package": "com.noushad.myinstaapp"/g' app.json
+          sed -i 's/"package": "com.anonymous.mymobileapp"/"package": "com.noushad.myinstaapp"/g' app.json
           CI=1 npx expo prebuild && CI=1 npx expo run:android --variant release
     artifacts:
       - my-mobile-app/android/app/build/outputs/apk/release/*.apk
