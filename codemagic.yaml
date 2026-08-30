@@ -15,7 +15,7 @@ workflows:
           
           EXACT_SRC=$(find ../extracted_app -type d -name "src" | head -n 1)
           if [ -z "$EXACT_SRC" ]; then
-            cp -R "../extracted_app/" src
+            cp -R ../extracted_app/* src
           else
             cp -R "$EXACT_SRC" ./src
           fi
@@ -23,7 +23,7 @@ workflows:
         script: |
           cd my-mobile-app
           npm install
-          npx expo run:android --variant release
+          npx expo run:android --variant release --no-interactive
     artifacts:
       - my-mobile-app/android/app/build/outputs/apk/release/*.apk
       
