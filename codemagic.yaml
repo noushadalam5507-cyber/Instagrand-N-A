@@ -11,11 +11,11 @@ workflows:
           unzip "neoncall-purple-studio (6).zip" -d ./extracted_app
           EXACT_SRC=$(find ./extracted_app -type d -name "src" | head -n 1)
           if [ -z "$EXACT_SRC" ]; then
-              cp -R ../extracted_app/* src
+              cd ./extracted_app
           else
-              cp -R "$EXACT_SRC/." src
+              cd "$(dirname "$EXACT_SRC")"
           fi
           npm install
           npx expo prebuild --clean
-          CI=1 npx expo run:android --variant release --no-interactive
+          npx expo run:android --variant release
           
